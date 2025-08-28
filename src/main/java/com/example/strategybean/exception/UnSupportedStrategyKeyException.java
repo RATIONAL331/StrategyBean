@@ -6,5 +6,5 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class UnSupportedStrategyKeyException extends RuntimeException {
-	private final String routingKey;
+    private final String routingKey;
 }

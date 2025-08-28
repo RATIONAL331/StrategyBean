@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface StrategyKey {
-	String value() default "#root";
+    String value() default "#root";
 }

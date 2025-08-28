@@ -1,4 +1,4 @@
-package com.example.strategybean.payment.request;
+package com.example.strategybean.example.payment.request;
 
 public class PaymentRequest {
     private PayType type;
