@@ -9,9 +9,9 @@ class StrategyBeanContext {
     static Map<Class<?>, Object> orElseTargets = new HashMap<>();
 
     @SuppressWarnings("unchecked")
-    static <T> T getTargetBean(Class<T> type, String routingKey) {
+    static <T> T getTargetBean(Class<T> type, String mappingKey) {
         return Optional.ofNullable(strategyBeanTargets.get(type))
-            .map(map -> (T)map.get(routingKey))
+            .map(map -> (T)map.get(mappingKey))
             .orElseGet(() -> (T)orElseTargets.get(type));
     }
 }

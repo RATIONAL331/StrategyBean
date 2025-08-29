@@ -80,6 +80,9 @@ public interface PaymentService {
     
     // 짧은 SpEL 표현식
     String handleRequestShort(@StrategyKey("type") PaymentRequest request);
+    
+    // String 표현식 사용
+    String handleString(@StrategyKey String typeStr);
 }
 
 // 실제 구현체들
@@ -88,6 +91,7 @@ public class CardPaymentHandler implements PaymentService {
     public String handle(PayType type) { return "CARD 결제 처리"; }
     public String handleRequest(PaymentRequest req) { return "CARD 결제 처리"; }
     public String handleRequestShort(PaymentRequest req) { return "CARD 결제 처리"; }
+    public String handleString(String typeStr) { return "CARD 결제 처리"; }
 }
 
 @Component  
@@ -95,6 +99,7 @@ public class CashPaymentHandler implements PaymentService {
     public String handle(PayType type) { return "CASH 결제 처리"; }
     public String handleRequest(PaymentRequest req) { return "CASH 결제 처리"; }
     public String handleRequestShort(PaymentRequest req) { return "CASH 결제 처리"; }
+    public String handleString(String typeStr) { return "CASH 결제 처리"; }
 }
 ```
 
@@ -212,7 +217,7 @@ public interface PaymentService {
 
 ### Fallback 처리
 
-매칭되지 않는 키에 대한 기본 처리를 설정할 수 있습니다:
+매핑되지 않는 키에 대한 기본 처리를 설정할 수 있습니다:
 
 ```java
 @StrategyBean(
@@ -225,6 +230,7 @@ public interface MyService {
     // POINT 타입은 매핑되지 않았으므로 DefaultHandler가 처리함
 }
 ```
+* Fallback을 설정하지 않고 매핑되지 못하면 메서드 호출 시 런타임에 `UnSupportedStrategyKeyException`이 발생합니다.
 
 ## 🏗️ 아키텍처
 

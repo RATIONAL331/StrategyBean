@@ -18,7 +18,7 @@ class PaymentServiceStrategyBeanIntegrationTest {
 
     @Test
     @DisplayName("Enum parameter with @StrategyKey on param routes correctly and uses orElse for unsupported")
-    void enumParamRouting_withFallback_andDefault() {
+    void enumParam() {
         Assertions.assertThat(paymentService.handle(PayType.CARD)).isEqualTo("CARD");
         Assertions.assertThat(paymentService.handle(PayType.CASH)).isEqualTo("CASH");
         Assertions.assertThat(paymentService.handle(PayType.POINT)).isEqualTo("DEFAULT");
@@ -26,7 +26,7 @@ class PaymentServiceStrategyBeanIntegrationTest {
 
     @Test
     @DisplayName("Method-level @StrategyKey with #root[0] routes correctly")
-    void methodLevelRouting() {
+    void methodLevel() {
         Assertions.assertThat(paymentService.handleMethodLevel(PayType.CARD)).isEqualTo("CARD");
         Assertions.assertThat(paymentService.handleMethodLevel(PayType.CASH)).isEqualTo("CASH");
         Assertions.assertThat(paymentService.handleMethodLevel(PayType.POINT)).isEqualTo("DEFAULT");
@@ -34,7 +34,7 @@ class PaymentServiceStrategyBeanIntegrationTest {
 
     @Test
     @DisplayName("POJO parameter with @StrategyKey SpEL '#root.type' routes correctly and uses orElse")
-    void pojoParamSpELRouting_withFallback() {
+    void pojoParamSpEL() {
         Assertions.assertThat(paymentService.handleReq(new PaymentRequest(PayType.CARD))).isEqualTo("CARD");
         Assertions.assertThat(paymentService.handleReq(new PaymentRequest(PayType.CASH))).isEqualTo("CASH");
         Assertions.assertThat(paymentService.handleReq(new PaymentRequest(PayType.POINT))).isEqualTo("DEFAULT");
@@ -42,7 +42,7 @@ class PaymentServiceStrategyBeanIntegrationTest {
 
     @Test
     @DisplayName("POJO parameter with @StrategyKey short SpEL 'type' routes correctly and uses orElse")
-    void pojoParamShortSpELRouting_withFallback() {
+    void pojoParamShortSpEL() {
         Assertions.assertThat(paymentService.handleReqShortSPEL(new PaymentRequest(PayType.CARD))).isEqualTo("CARD");
         Assertions.assertThat(paymentService.handleReqShortSPEL(new PaymentRequest(PayType.CASH))).isEqualTo("CASH");
         Assertions.assertThat(paymentService.handleReqShortSPEL(new PaymentRequest(PayType.POINT))).isEqualTo("DEFAULT");
@@ -50,7 +50,7 @@ class PaymentServiceStrategyBeanIntegrationTest {
 
     @Test
     @DisplayName("String parameter with @StrategyKey")
-    void stringParamRouting_withFallback() {
+    void stringParamR() {
         Assertions.assertThat(paymentService.handleWithString("CARD")).isEqualTo("CARD");
         Assertions.assertThat(paymentService.handleWithString("CASH")).isEqualTo("CASH");
         Assertions.assertThat(paymentService.handleWithString("POINT")).isEqualTo("DEFAULT");

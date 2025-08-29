@@ -29,10 +29,10 @@ public class StrategyDefinitionRegistrar implements ImportBeanDefinitionRegistra
         @Nonnull AnnotationMetadata importingClassMetadata,
         @Nonnull BeanDefinitionRegistry registry
     ) {
-        StrategyBeanScanner routingBeanScanner = new StrategyBeanScanner(registry);
+        StrategyBeanScanner strategyBeanScanner = new StrategyBeanScanner(registry);
 
         for (String basePackage : getBasePackage(importingClassMetadata)) {
-            Set<BeanDefinitionHolder> beanDefinitionHolders = routingBeanScanner.scan(basePackage);
+            Set<BeanDefinitionHolder> beanDefinitionHolders = strategyBeanScanner.scan(basePackage);
 
             for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
                 log.debug("register bean definition: {}", beanDefinitionHolder.getBeanName());

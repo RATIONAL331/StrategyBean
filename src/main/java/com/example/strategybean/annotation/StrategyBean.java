@@ -6,8 +6,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface StrategyBean {
-    String name() default "";
-
     Mapping[] value() default {};
 
     Otherwise orElse() default @Otherwise;

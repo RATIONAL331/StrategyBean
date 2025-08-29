@@ -39,7 +39,7 @@ class StrategyKeyContext {
         }
     }
 
-    String getRoutingKey(Object[] args) {
+    String getExpressionValue(Object[] args) {
         EvaluationContext evaluationContext = getEvaluationContext(args);
         return expression.getValue(evaluationContext, String.class);
     }

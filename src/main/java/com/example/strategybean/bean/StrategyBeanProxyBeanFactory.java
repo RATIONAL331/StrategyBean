@@ -32,11 +32,11 @@ public class StrategyBeanProxyBeanFactory<T> implements FactoryBean<T>, Applicat
         StrategyBean annotation = AnnotationUtils.findAnnotation(beanClassName, StrategyBean.class);
         addBeanTargets(annotation);
 
-        StrategyBeanProxy<?> routingBeanProxy = new StrategyBeanProxy<>(beanClassName);
+        StrategyBeanProxy<?> strategyBeanProxy = new StrategyBeanProxy<>(beanClassName);
 
         return (T)Proxy.newProxyInstance(getClass().getClassLoader(),
             new Class[] {this.beanClassName},
-            routingBeanProxy);
+            strategyBeanProxy);
     }
 
     private void addBeanTargets(StrategyBean annotation) {
@@ -44,16 +44,16 @@ public class StrategyBeanProxyBeanFactory<T> implements FactoryBean<T>, Applicat
             throw new BeanDefinitionValidationException("No @StrategyBean found on " + beanClassName);
         }
 
-        StrategyBean.Mapping[] routingTables = annotation.value();
-        if (routingTables.length == 0) {
-            throw new BeanDefinitionValidationException("Cannot resolve key! Define @RoutingTable, implement RoutingKeySupplier or RoutingPredicate");
+        StrategyBean.Mapping[] mappingTables = annotation.value();
+        if (mappingTables.length == 0) {
+            throw new BeanDefinitionValidationException("Cannot resolve key! Define @StrategyBean.Mapping");
         }
 
-        for (StrategyBean.Mapping mapping : routingTables) {
+        for (StrategyBean.Mapping mapping : mappingTables) {
             validateInterfaceImplementation(mapping.targetClass());
         }
 
-        Map<String, T> targetMap = Arrays.stream(routingTables)
+        Map<String, T> targetMap = Arrays.stream(mappingTables)
             .collect(Collectors.toMap(StrategyBean.Mapping::mappingKey, this::getBean));
         StrategyBeanContext.strategyBeanTargets.put(beanClassName, targetMap);
 
@@ -67,11 +67,11 @@ public class StrategyBeanProxyBeanFactory<T> implements FactoryBean<T>, Applicat
     }
 
     @SuppressWarnings("unchecked")
-    private T getBean(StrategyBean.Mapping routingTable) {
-        if (routingTable.targetClass() == Object.class) {
-            throw new BeanDefinitionValidationException("targetClass must be set for mappingKey: " + routingTable.mappingKey());
+    private T getBean(StrategyBean.Mapping mappingTable) {
+        if (mappingTable.targetClass() == Object.class) {
+            throw new BeanDefinitionValidationException("targetClass must be set for mappingKey: " + mappingTable.mappingKey());
         }
-        return (T)applicationContext.getBean(routingTable.targetClass());
+        return (T)applicationContext.getBean(mappingTable.targetClass());
     }
 
     @SuppressWarnings("unchecked")

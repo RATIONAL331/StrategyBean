@@ -18,7 +18,7 @@ class StrategyBeanNameGenerator extends AnnotationBeanNameGenerator {
         return PREFIX + super.generateBeanName(definition, registry);
     }
 
-    public static boolean isRoutingBeanName(String beanName) {
+    public static boolean isStrategyBeanName(String beanName) {
         return beanName.startsWith(PREFIX);
     }
 }
